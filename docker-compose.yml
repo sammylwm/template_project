@@ -1,0 +1,26 @@
+x-common: &name
+  build: .
+  restart: unless-stopped
+
+services:
+  name:
+    <<: *name
+    container_name: name
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/data
+  pg:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DATA: /var/lib/postgresql/data
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  pg_data:

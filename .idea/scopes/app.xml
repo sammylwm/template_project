@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="app" pattern="file[template_project]:*&&!file[template_project]:.idea/*" />
+</component>
