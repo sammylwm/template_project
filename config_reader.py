@@ -6,7 +6,12 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from aiogram import Bot, Dispatcher
 from fastapi import FastAPI
 from tortoise import Tortoise
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+
+bot_name = os.getenv("BOT_NAME")
 
 class Config(BaseSettings):
     BOT_TOKEN: SecretStr
@@ -16,6 +21,7 @@ class Config(BaseSettings):
     APP_HOST: str = "0.0.0.0"
     APP_PORT: int = 8080
     DB_URL: SecretStr
+    BOT_NAME: str = "/" + bot_name
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -25,7 +31,7 @@ class Config(BaseSettings):
 @asynccontextmanager
 async def lifespan() -> AsyncGenerator:
     await bot.set_webhook(
-        url=f"{config.WEBHOOK_URL}/webhook",
+        url=f"{config.WEBHOOK_URL}{config.BOT_NAME}/webhook",
         allowed_updates=dp.resolve_used_update_types(),
         drop_pending_updates=True,
     )
