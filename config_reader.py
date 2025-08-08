@@ -12,14 +12,16 @@ import os
 load_dotenv()
 
 bot_name = os.getenv("BOT_NAME")
+webapp_url = os.getenv("WEBAPP_URL")
+app_port = os.getenv("APP_PORT")
 
 class Config(BaseSettings):
     BOT_TOKEN: SecretStr
 
-    WEBAPP_URL: str = "https://domen.net"
+    WEBAPP_URL: str = webapp_url
     WEBHOOK_URL: str = f"{WEBAPP_URL}/{bot_name}"
     APP_HOST: str = "0.0.0.0"
-    APP_PORT: int = 8080
+    APP_PORT: int = app_port
     DB_URL: SecretStr
 
     model_config = SettingsConfigDict(
