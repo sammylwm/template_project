@@ -13,7 +13,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 dp.include_router(setup_routers())
-app.include_router(setup_routers_api(), prefix=config.BOT_NAME)
+app.include_router(setup_routers_api())
 
 if __name__ == "__main__":
     uvicorn.run(
