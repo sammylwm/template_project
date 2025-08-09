@@ -1,15 +1,17 @@
-x-common: &name
-  build: .
-  restart: unless-stopped
-
 services:
-  name:
-    <<: *name
-    container_name: name
+  name_bot:
+    build:
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    container_name: name_bot
     ports:
       - "8000:8000"
     volumes:
       - .:/data
+    command:
+      - "python"
+      - "main.py"
+
   name_pg:
     image: postgres:17
     environment:
