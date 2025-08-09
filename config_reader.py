@@ -6,23 +6,18 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from aiogram import Bot, Dispatcher
 from fastapi import FastAPI
 from tortoise import Tortoise
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-bot_name = os.getenv("BOT_NAME")
-webapp_url = os.getenv("WEBAPP_URL")
-app_port = os.getenv("APP_PORT")
 
 class Config(BaseSettings):
     BOT_TOKEN: SecretStr
-
-    WEBAPP_URL: str = webapp_url
-    WEBHOOK_URL: str = f"{WEBAPP_URL}/{bot_name}"
+    WEBHOOK_URL: str
     APP_HOST: str = "0.0.0.0"
-    APP_PORT: int = app_port
+    APP_PORT: int
     DB_URL: SecretStr
+
+    DB_USER: str
+    DB_PASSWORD: str
+    DB_NAME: str
+    DB_HOST: str
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -30,7 +25,9 @@ class Config(BaseSettings):
     )
 
 @asynccontextmanager
-async def lifespan() -> AsyncGenerator:
+async def lifespan(app: FastAPI) -> AsyncGenerator:
+    url = f"{config.WEBHOOK_URL}/webhook"
+    print("Webhook URL:", url)
     await bot.set_webhook(
         url=f"{config.WEBHOOK_URL}/webhook",
         allowed_updates=dp.resolve_used_update_types(),
@@ -51,7 +48,7 @@ TORTOISE_ORM = {
     "connections": {"default": config.DB_URL.get_secret_value()},
     "apps": {
         "models": {
-            "models": ["db.models.user", "aerich.models"],
+            "models": ["db.models.sticker_pack", "aerich.models"],
             "default_connection": "default",
         },
     },

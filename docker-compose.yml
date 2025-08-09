@@ -10,7 +10,7 @@ services:
       - "8000:8000"
     volumes:
       - .:/data
-  pg:
+  name_pg:
     image: postgres:17
     environment:
       POSTGRES_DB: ${DB_NAME}
@@ -18,9 +18,9 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DATA: /var/lib/postgresql/data
     volumes:
-      - pg_data:/var/lib/postgresql/data
+      - name_pg_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
 volumes:
-  pg_data:
+  name_pg_data:

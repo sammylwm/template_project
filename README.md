@@ -1,0 +1,1 @@
+uv run aerich init -t config_reader.TORTOISE_ORM --location ./db/migrations
