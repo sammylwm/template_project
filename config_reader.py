@@ -11,7 +11,7 @@ class Config(BaseSettings):
     BOT_TOKEN: SecretStr
     WEBHOOK_URL: str
     APP_HOST: str = "0.0.0.0"
-    APP_PORT: int
+    APP_PORT: int = 8000
     DB_URL: SecretStr
 
     DB_USER: str
