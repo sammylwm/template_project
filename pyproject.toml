@@ -5,19 +5,14 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "aerich>=0.9.1",
     "aiogram>=3.21.0",
+    "alembic>=1.16.4",
     "asyncpg>=0.30.0",
     "black>=25.1.0",
     "fastapi>=0.116.1",
     "pydantic>=2.11.7",
     "pydantic-settings>=2.10.1",
+    "sqlalchemy[asyncio]>=2.0.43",
     "tomlkit>=0.13.3",
-    "tortoise-orm>=0.25.1",
     "uvicorn>=0.35.0",
 ]
-
-[tool.aerich]
-tortoise_orm = "config_reader.TORTOISE_ORM"
-location = "./db/migrations"
-src_folder = "./."
