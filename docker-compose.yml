@@ -21,7 +21,7 @@ services:
         - action: rebuild
           path: ./uv.lock
 
-  name_pg:
+  db:
     image: postgres:17
     environment:
       POSTGRES_DB: ${DB_NAME}
